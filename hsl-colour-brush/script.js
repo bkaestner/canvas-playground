@@ -3,13 +3,15 @@ var ctx    = canvas.getContext("2d");
 
 var BRUSH_RADIUS = 10;
 var DELTA_MIN = 1;
-var DELTA_MAX = 10;
+var DELTA_MAX = 20;
+var DELTA_RATIO = 0.9;
 
 // Paint whenever the mouse moves
 canvas.addEventListener("mousemove", (function(){
   var i = 0;
   var prevX = -1;
   var prevY = -1;
+  var prevDelta = DELTA_MIN;
   return function(e){
 
     // START: Position related
@@ -32,6 +34,8 @@ canvas.addEventListener("mousemove", (function(){
     var delta = Math.min(DELTA_MAX, Math.max( DELTA_MIN,
                   Math.sqrt(dx * dx + dy * dy)
                 ));
+
+    delta = DELTA_RATIO * prevDelta + (1 - DELTA_RATIO) * delta;
 
     // Save the current position as previous one.
     prevX = x;
