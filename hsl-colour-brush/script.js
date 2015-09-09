@@ -5,6 +5,24 @@ var BRUSH_RADIUS = 10;
 var DELTA_MIN = 1;
 var DELTA_MAX = 20;
 var DELTA_RATIO = 0.9;
+var DRAW_OPACITY = 0.1;
+
+//! Takes the current actual values of height and width
+//! and sets them as the element's attributes.
+function registerCanvasSizeChange(){
+  var style = window.getComputedStyle(canvas);
+
+  //! @remark Without this, the canvas coordinates won't
+  //!         match their respective (relaiteve) screen
+  //!         coordinates and one would end up with a
+  //!         offset.
+  canvas.width  = style.width.replace("px",'');
+  canvas.height = style.height.replace("px",'');
+}
+
+registerCanvasSizeChange();
+
+window.addEventListener("resize", registerCanvasSizeChange);
 
 // Paint whenever the mouse moves
 canvas.addEventListener("mousemove", (function(){
@@ -16,6 +34,7 @@ canvas.addEventListener("mousemove", (function(){
 
     // START: Position related
     // Calculate position of the mouse relative to the canvas
+    //! @bug This doesn't take scrolling into account.
     var x = e.clientX - canvas.offsetLeft;
     var y = e.clientY - canvas.offsetTop;
 
@@ -55,7 +74,7 @@ canvas.addEventListener("mousemove", (function(){
 
     // Paint over the whole canvas with a mostly transparent
     // colour, which makes old brushes "fade" away.
-    ctx.fillStyle = "rgba(255, 255, 255, 0.025)";
+    ctx.fillStyle = "rgba(255, 255, 255, " + DRAW_OPACITY +")";
     ctx.beginPath();
     ctx.rect(0, 0, canvas.width, canvas.height);
     ctx.fill();
