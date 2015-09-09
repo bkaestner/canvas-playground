@@ -59,6 +59,7 @@ canvas.addEventListener("mousemove", (function(){
     // Save the current position as previous one.
     prevX = x;
     prevY = y;
+    prevDelta = delta;
     // END: Position related
 
     // START: Drawing
