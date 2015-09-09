@@ -1,11 +1,11 @@
 var canvas = document.getElementById("canvas");
 var ctx    = canvas.getContext("2d");
 
-var BRUSH_RADIUS = 10;
-var DELTA_MIN = 1;
-var DELTA_MAX = 20;
-var DELTA_RATIO = 0.9;
-var DRAW_OPACITY = 0.1;
+var BRUSH_RADIUS = 10;  //!< the basic brush size
+var DELTA_MIN = 1;      //!< factor at the lowest speed
+var DELTA_MAX = 20;     //!< factor at the highest speed
+var DELTA_RATIO = 0.95; //!< "smoothing" of the factor
+var DRAW_OPACITY = 0.1; //!< the opacity of rectangle used for the "fading"
 
 //! Takes the current actual values of height and width
 //! and sets them as the element's attributes.
