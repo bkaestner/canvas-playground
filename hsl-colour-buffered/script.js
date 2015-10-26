@@ -1,24 +1,22 @@
 var canvas = document.getElementById("canvas");
 var ctx    = canvas.getContext("2d");
 
-var BRUSH_RADIUS = 10;
+var BRUSH_RADIUS = 10;  //!< the basic brush size
 var DELTA_MIN = 1;      //!< factor at the lowest speed
 var DELTA_MAX = 20;     //!< factor at the highest speed
 var DELTA_RATIO = 0.95; //!< "smoothing" of the factor
 var DRAW_OPACITY = 0.1; //!< the opacity of rectangle used for the "fading"
 
-var buffer = [];
-var buffer_read  = 0;
-var buffer_write = 0;
-var buffer_pop   = 0;
-var BUFFER_SIZE  = 255;
-var BUFFER_HANDLE_AMOUNT = 3;
+var buffer = [];        //!< buffer for the circle positions
+var buffer_read  = 0;   //!< buffer read position
+var buffer_write = 0;   //!< buffer write position
+var buffer_pop   = 0;   //!< buffer stack element
+var BUFFER_SIZE  = 255; //!< maximum number of items before we start at 0 again
+var BUFFER_HANDLE_AMOUNT = 3; //!< handled number of buffer items per iteration
 
 
-var WINDOW_THRESH = 20;
-var last_cut = -10;
-var i;
-
+var WINDOW_THRESH = 20; //!< the threshold [ms] between mousemove events
+var last_cut = -10;     //!< the time of the last recorded mousemove
 
 // Paint whenever the mouse moves
 canvas.addEventListener("mousemove", (function(){
